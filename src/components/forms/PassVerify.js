@@ -96,7 +96,7 @@ export default function PassVerify({ setselectedForm, handleLogin }) {
   console.log(process.env.IP_URL);
   const fetchIpAddress = async () => {
     try {
-      const response = await fetch(process.env.IP_URL);
+      const response = await fetch(process.env.NEXT_PUBLIC_IP_URL);
       const data = await response.json();
       return data.ip;
     } catch (error) {
