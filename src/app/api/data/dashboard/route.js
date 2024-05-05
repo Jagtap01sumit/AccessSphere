@@ -6,7 +6,6 @@ export async function GET(req, res) {
   try {
     await connectDB();
 
-    // Fetch all documents from the LoginUser collection using Mongoose model
     const userData = await UserLogin.find({});
 
     return NextResponse.json({ userData }, { status: 200 });

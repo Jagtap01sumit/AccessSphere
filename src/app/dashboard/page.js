@@ -49,7 +49,13 @@ export default function Dashboard() {
       <Typography variant="h1" gutterBottom className="text-center mt-4">
         Manage Access and Devices
       </Typography>
-      <Box spacing={3} className="flex justify-between mx-8">
+      <Grid
+        spacing={3}
+        item
+        xs={12}
+        md={6}
+        className="flex justify-between mx-8"
+      >
         <TextField
           label="Filter by Email"
           variant="outlined"
@@ -65,7 +71,7 @@ export default function Dashboard() {
           onChange={handleTimeFilterChange}
           className="mb-4 sm:mx-2 md:mx-0"
         />
-      </Box>
+      </Grid>
       <Container>
         <Grid container spacing={3}>
           {userData

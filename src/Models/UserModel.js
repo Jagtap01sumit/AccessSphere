@@ -11,7 +11,10 @@ const UserSchema = new mongoose.Schema({
   otp: {
     type: String,
   },
-
+  isAdmin: {
+    type: Boolean,
+    default: true,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
