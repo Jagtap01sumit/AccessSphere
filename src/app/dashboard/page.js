@@ -9,14 +9,14 @@ export default function Dashboard() {
   const [filterEmail, setFilterEmail] = useState("");
   const [filterTime, setFilterTime] = useState("");
 
-  useEffect(() => {
+  // useEffect(() => {
     // const token = getCookie("token");
     //TODO: Verify the token at server side
 
-    if (!token) {
+    // if (!token) {
       // window.location.href = "/auth";
-    }
-  }, []);
+    // }
+  // }, []);
   const getCookie = () => {};
 
   useEffect(() => {
