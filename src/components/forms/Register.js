@@ -60,15 +60,16 @@ const Register = ({ setselectedForm, handleSignup }) => {
 
       const responseData = await res.json();
 
-      console.log(responseData);
       if (res.ok) {
+        console.log(responseData);
         setselectedForm("login");
+        toast.success("Registration Successfully");
       } else {
-        throw new Error("Failed to create a topic");
+        toast.error(responseData.error);
       }
     } catch (error) {
+      toast.error("An error occurred. Please try again later.");
       console.log(error);
-      toast.error(error);
     }
   };
   return (
