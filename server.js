@@ -15,7 +15,15 @@ const handler = app.getRequestHandler();
 
 app.prepare().then(() => {
   const httpServer = createServer(handler);
-  const io = new Server(httpServer);
+  const io = new Server(httpServer, {
+    cors: {
+      origin:
+        process.env.NODE_ENV !== "production"
+          ? "http://localhost:3000"
+          : "https://your-production-url.vercel.app",
+      methods: ["GET", "POST"],
+    },
+  });
 
   io.on("connection", (socket) => {
     console.log("A user connected");

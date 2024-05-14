@@ -12,7 +12,9 @@ export default function Home() {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    const newSocket = io("http://localhost:3000");
+    const socketUrl = process.env.NEXT_PUBLIC_SOCKET_IO_URL;
+    console.log(socketUrl);
+    const newSocket = io(socketUrl);
     setSocket(newSocket);
 
     newSocket.on("dataFromServer", (data) => {
