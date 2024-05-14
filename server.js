@@ -18,9 +18,7 @@ app.prepare().then(() => {
   const io = new Server(httpServer, {
     cors: {
       origin:
-        process.env.NODE_ENV !== "production"
-          ? "http://localhost:3000"
-          : "https://access-sphere.vercel.app",
+       "https://access-sphere.vercel.app",
       methods: ["GET", "POST"],
     },
   });
