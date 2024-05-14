@@ -20,7 +20,7 @@ app.prepare().then(() => {
       origin:
         process.env.NODE_ENV !== "production"
           ? "http://localhost:3000"
-          : "https://your-production-url.vercel.app",
+          : "https://access-sphere.vercel.app",
       methods: ["GET", "POST"],
     },
   });
