@@ -20,12 +20,12 @@ const MyCard = ({ user }) => {
 
         {/* Device Info */}
         <Typography variant="body2" className="mb-2">
-          Device Type: {user.deviceInfo.deviceType}
+          Device Type: {user.deviceInfo?.deviceType}
         </Typography>
-        {user.deviceInfo.geolocation ? (
+        {user.deviceInfo?.geolocation ? (
           <>
             <Typography variant="body2" className="mb-2">
-              Longitude: {user.deviceInfo.geolocation.longitude}
+              Longitude: {user.deviceInfo.geolocation?.longitude}
             </Typography>
             <Typography variant="body2" className="mb-2">
               Latitude: {user.deviceInfo.geolocation.latitude}
@@ -42,10 +42,10 @@ const MyCard = ({ user }) => {
           </>
         )}
         <Typography variant="body2" className="mb-2">
-          Device Name: {user.deviceInfo.deviceName}
+          Device Name: {user.deviceInfo?.deviceName}
         </Typography>
         <Typography variant="body2" className="mb-2">
-          IP Address: {user.deviceInfo.ipAddress}
+          IP Address: {user.deviceInfo?.ipAddress}
         </Typography>
 
         {/* Date */}

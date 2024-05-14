@@ -1,48 +1,37 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { io } from "socket.io-client";
 import MyCard from "../../components/card/Card";
 import { Grid, TextField, Container, Box, Typography } from "@mui/material";
 import Image from "next/image";
 
-export default function Dashboard() {
+export default function Home() {
   const [userData, setUserData] = useState([]);
   const [filterEmail, setFilterEmail] = useState("");
   const [filterTime, setFilterTime] = useState("");
-
-  // useEffect(() => {
-    // const token = getCookie("token");
-    //TODO: Verify the token at server side
-
-    // if (!token) {
-      // window.location.href = "/auth";
-    // }
-  // }, []);
-  const getCookie = () => {};
+  const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch("/api/data/dashboard");
-        if (response.ok) {
-          const data = await response.json();
-          setUserData(data.userData);
-        } else {
-          console.error("Failed to fetch user data");
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    }
+    const newSocket = io("http://localhost:3000");
+    setSocket(newSocket);
 
-    fetchData();
+    newSocket.on("dataFromServer", (data) => {
+      setUserData(data);
+    });
+
+    return () => {
+      newSocket.disconnect();
+    };
   }, []);
 
   useEffect(() => {
     console.log(userData);
   }, [userData]);
+
   const handleFilterChange = (e) => {
     setFilterEmail(e.target.value);
   };
+
   const handleTimeFilterChange = (e) => {
     setFilterTime(e.target.value);
   };
@@ -54,7 +43,7 @@ export default function Dashboard() {
           width={90}
           height={90}
           src="/images/pngwing.com.png"
-          className="img-fluid  d-none d-sm-block "
+          className="img-fluid d-none d-sm-block"
         />
       </Box>
       <Typography variant="h1" gutterBottom className="text-center mt-4">
