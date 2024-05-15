@@ -17,42 +17,28 @@ app.prepare().then(() => {
   const httpServer = createServer(handler);
   const io = new Server(httpServer, {
     cors: {
-      origin:
-        process.env.NODE_ENV !== "production"
-          ? "http://localhost:3000"
-          : "https://your-production-url.vercel.app",
+      origin: "https://access-sphere.vercel.app,http://localhost:3000",
       methods: ["GET", "POST"],
     },
   });
 
-  io.on("connection", (socket) => {
+  io.on("connection", async (socket) => {
     console.log("A user connected");
 
-    fetchDataFromMongoDB((err, data) => {
-      if (err) {
-        console.error("Error fetching data from MongoDB:", err);
-      } else {
-        socket.emit("dataFromServer", data);
-      }
-    });
+    const userData = await fetchDataFromMongoDB();
 
-    const changeStream = UserLogin.watch();
-    changeStream.on("change", async (change) => {
-      console.log("Data changed in MongoDB:", change);
-    });
-
+    io.emit("dataFromServer", userData);
     socket.on("disconnect", () => {
-      console.log("A user disconnected");
+      console.log("Client disconnected");
     });
   });
 
-  async function fetchDataFromMongoDB(callback) {
+  async function fetchDataFromMongoDB() {
     try {
       const userData = await UserLogin.find({});
-      console.log("Data fetched from MongoDB:", userData);
-      callback(null, userData);
+      return userData;
     } catch (err) {
-      callback(err, null);
+      console.log(err);
     }
   }
 

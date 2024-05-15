@@ -17,13 +17,17 @@ export default function Home() {
     const newSocket = io(socketUrl);
     setSocket(newSocket);
 
+    newSocket.on("connect", () => {
+      console.log("Connected to server");
+    });
+
     newSocket.on("dataFromServer", (data) => {
       setUserData(data);
     });
 
-    return () => {
-      newSocket.disconnect();
-    };
+    newSocket.on("disconnect", () => {
+      console.log("Disconnected from server");
+    });
   }, []);
 
   useEffect(() => {
@@ -40,6 +44,7 @@ export default function Home() {
 
   return (
     <div>
+      <p>USERID: {socket?.id}</p>
       <Box className="flex justify-center align-items-center m-5">
         <Image
           width={90}
@@ -77,7 +82,7 @@ export default function Home() {
       <Container>
         <Grid container spacing={3}>
           {userData
-            .filter((user) =>
+            ?.filter((user) =>
               user.email.toLowerCase().includes(filterEmail.toLowerCase())
             )
             .map((user) => (
