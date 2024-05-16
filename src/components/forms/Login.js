@@ -20,12 +20,13 @@ import { MainContext } from "../../context/MainContext";
 import { toast } from "react-hot-toast";
 
 export default function Login({ setselectedForm, handleLogin }) {
-  const { loginEmail, setLoginEmail } = useContext(MainContext);
+  const { loginEmail, setLoginEmail, setUniqueIdentity, uniqueIdentity } =
+    useContext(MainContext);
 
   const schema = yup.object().shape({
     email: yup.string().email("Invalid email.").required("Email is required."),
   });
-
+  console.log(uniqueIdentity);
   const {
     register,
     handleSubmit,
@@ -37,7 +38,7 @@ export default function Login({ setselectedForm, handleLogin }) {
   });
 
   const onSubmit = async (data) => {
-    const { email } = data;
+    const { email, uniqueIdentity } = data;
     console.log(email);
     try {
       const res = await fetch("/api/auth/login", {
@@ -45,7 +46,7 @@ export default function Login({ setselectedForm, handleLogin }) {
         headers: {
           "Content-type": "application/json",
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, uniqueIdentity }),
       });
       const data = await res.json();
       console.log(data, res);
@@ -53,6 +54,7 @@ export default function Login({ setselectedForm, handleLogin }) {
         console.log(data);
         console.log(email);
         setLoginEmail(email);
+        setUniqueIdentity(uniqueIdentity);
         toast.success(data.message);
         setselectedForm("passVerification");
         reset();
@@ -90,6 +92,21 @@ export default function Login({ setselectedForm, handleLogin }) {
                     {...register("email")}
                     error={!!errors.email}
                     helperText={errors.email?.message}
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12}>
+                <Box>
+                  <InputLabel className="fw-medium mb-2">Any Unique</InputLabel>
+                  <TextField
+                    type="text"
+                    variant="outlined"
+                    label="abcd"
+                    name="Unique Identity"
+                    fullWidth
+                    {...register("uniqueIdentity")}
+                    error={!!errors.uniqueIdentity}
+                    helperText={errors.uniqueIdentity?.message}
                   />
                 </Box>
               </Grid>

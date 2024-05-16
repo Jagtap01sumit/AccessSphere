@@ -5,15 +5,22 @@ import { Toaster } from "react-hot-toast";
 
 import { MainContext } from "../context/MainContext";
 import { useState } from "react";
-import { AuthContext, AuthContextProvider } from "../context/AuthContext";
+import {
+  AuthContext,
+  AuthContextProvider,
+  useAuthContext,
+} from "../context/AuthContext";
 import { SocketContextProvider } from "../context/socketcontext";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({ children }) {
   const [loginEmail, setLoginEmail] = useState("");
+  const [uniqueIdentity, setUniqueIdentity] = useState("");
   return (
-    <MainContext.Provider value={{ loginEmail, setLoginEmail }}>
+    <MainContext.Provider
+      value={{ loginEmail, setLoginEmail, uniqueIdentity, setUniqueIdentity }}
+    >
       <AuthContextProvider>
         <SocketContextProvider>
           <html lang="en">

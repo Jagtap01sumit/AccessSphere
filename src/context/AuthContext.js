@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import Cookies from "js-cookie";
-// Use a library like jwt-decode for decoding JWT tokens
 
 export const AuthContext = createContext();
 
@@ -9,18 +8,19 @@ export const useAuthContext = () => {
 };
 
 export const AuthContextProvider = ({ children }) => {
-  const [authUser, setAuthUser] = useState(
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjM2NzQ1MjRjYmRlZWU1OTFjZDg2NGIiLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE3MTU4NzA1MTgsImV4cCI6MTcxNTk1NjkxOH0.yZGAHkvL0Jo4C4C1hG-i4ZgD9cCUIozOuuRXYLwOreY"
-  );
+  const token = Cookies.get("token");
+  console.log(token, "toki");
+  const [authUser, setAuthUser] = useState(token || null);
 
   useEffect(() => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjM2NzQ1MjRjYmRlZWU1OTFjZDg2NGIiLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE3MTU4NzA1MTgsImV4cCI6MTcxNTk1NjkxOH0.yZGAHkvL0Jo4C4C1hG-i4ZgD9cCUIozOuuRXYLwOreYDY";
     console.log(token, "token");
     if (token) {
       setAuthUser(token);
+    } else {
+      window.location.href("/auth");
     }
-  }, []);
+  }, [token]);
+
   console.log(authUser, "authooo");
   return (
     <AuthContext.Provider value={{ authUser, setAuthUser }}>

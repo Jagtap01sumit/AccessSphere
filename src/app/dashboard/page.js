@@ -4,13 +4,18 @@ import { io } from "socket.io-client";
 import MyCard from "../../components/card/Card";
 import { Grid, TextField, Container, Box, Typography } from "@mui/material";
 import Image from "next/image";
+
+import { useAuthContext } from "../../context/AuthContext";
+
 import { useSocketContext } from "../../context/socketcontext";
 export default function Home() {
   const [userData, setUserData] = useState([]);
   const [filterEmail, setFilterEmail] = useState("");
   const [filterTime, setFilterTime] = useState("");
   const [socket, setSocket] = useState(null);
+  const { authUser } = useAuthContext();
   const { onlineUsers } = useSocketContext();
+
   useEffect(() => {
     const socketUrl = process.env.NEXT_PUBLIC_SOCKET_IO_URL;
     console.log(socketUrl);
@@ -29,9 +34,6 @@ export default function Home() {
       console.log("Disconnected from server");
     });
   }, []);
-  console.log(onlineUsers, "ffdfh");
-  const isOnline = userData.includes("66461b361f068930ef5c6306");
-  console.log(isOnline, "heyy");
 
   useEffect(() => {
     console.log(userData);

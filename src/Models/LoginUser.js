@@ -9,6 +9,11 @@ const loginUserSchema = new mongoose.Schema({
     type: Object,
     required: true,
   },
+  uniqueIdentity: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

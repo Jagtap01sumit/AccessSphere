@@ -9,8 +9,9 @@ import { cookies } from "next/headers";
 export async function POST(request) {
   try {
     connectDB();
-    const { email, password, deviceInfo } = await request.json();
-    console.log("ver", deviceInfo);
+    const { email, password, deviceInfo, uniqueIdentity } =
+      await request.json();
+
     const user = await User.findOne({ email });
 
     if (!user) {
@@ -29,13 +30,15 @@ export async function POST(request) {
 
     const loginUser = new LoginUser({
       email: user.email,
-      userId: user._id,
+
       deviceInfo: deviceInfo,
+      uniqueIdentity: uniqueIdentity,
     });
     await loginUser.save();
+    const userId = await LoginUser.findOne({ uniqueIdentity });
 
     const token = jwt.sign(
-      { userId: user._id, isAdmin: user.isAdmin },
+      { userId: userId._id, isAdmin: user.isAdmin },
       process.env.SECRET_KEY,
       {
         expiresIn: "1d",
@@ -48,7 +51,7 @@ export async function POST(request) {
     );
 
     cookies().set("token", token, {
-      httpOnly: true,
+      // httpOnly: true,
       maxAge: 86400,
       path: "/",
     });

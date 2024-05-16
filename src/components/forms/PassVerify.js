@@ -20,7 +20,8 @@ import { MainContext } from "../../context/MainContext";
 
 export default function PassVerify({ setselectedForm, handleLogin }) {
   const [showPassword, setShowPassword] = useState(false);
-  const { loginEmail, setLoginEmail } = useContext(MainContext);
+  const { loginEmail, setLoginEmail, setUniqueIdentity, uniqueIdentity } =
+    useContext(MainContext);
   const [deviceInfo, setDeviceInfo] = useState("");
   const schema = yup.object().shape({
     password: yup.string().min(8, "Password must have minimum 8 characters."),
@@ -114,7 +115,7 @@ export default function PassVerify({ setselectedForm, handleLogin }) {
         headers: {
           "Content-type": "application/json",
         },
-        body: JSON.stringify({ email, password, deviceInfo }),
+        body: JSON.stringify({ email, password, deviceInfo, uniqueIdentity }),
       });
       const responseData = await res.json();
 
