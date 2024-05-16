@@ -1,16 +1,16 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import MyCard from "../../components/card/Card";
 import { Grid, TextField, Container, Box, Typography } from "@mui/material";
 import Image from "next/image";
-
+import { useSocketContext } from "../../context/socketcontext";
 export default function Home() {
   const [userData, setUserData] = useState([]);
   const [filterEmail, setFilterEmail] = useState("");
   const [filterTime, setFilterTime] = useState("");
   const [socket, setSocket] = useState(null);
-
+  const { onlineUsers } = useSocketContext();
   useEffect(() => {
     const socketUrl = process.env.NEXT_PUBLIC_SOCKET_IO_URL;
     console.log(socketUrl);
@@ -29,6 +29,9 @@ export default function Home() {
       console.log("Disconnected from server");
     });
   }, []);
+  console.log(onlineUsers, "ffdfh");
+  const isOnline = userData.includes("66461b361f068930ef5c6306");
+  console.log(isOnline, "heyy");
 
   useEffect(() => {
     console.log(userData);
@@ -44,8 +47,8 @@ export default function Home() {
 
   return (
     <div>
-      <p>USERID: {socket?.id}</p>
-      <Box className="flex justify-center align-items-center m-5">
+      {/* <p>USERID: {socket?.id}</p> */}
+      <Box className="flex justify-center align-items-center m-5 ">
         <Image
           width={90}
           height={90}
@@ -87,7 +90,11 @@ export default function Home() {
             )
             .map((user) => (
               <Grid key={user._id} item xs={12} sm={12} md={4}>
-                <MyCard user={user} />
+                <MyCard
+                  user={user}
+                  id={user._id}
+                  isOnline={onlineUsers.includes(user._id)}
+                />
               </Grid>
             ))}
         </Grid>

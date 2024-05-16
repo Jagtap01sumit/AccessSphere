@@ -27,9 +27,20 @@ export async function POST(request) {
       });
     }
 
-    const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
-      expiresIn: "1d",
+    const loginUser = new LoginUser({
+      email: user.email,
+      userId: user._id,
+      deviceInfo: deviceInfo,
     });
+    await loginUser.save();
+
+    const token = jwt.sign(
+      { userId: user._id, isAdmin: user.isAdmin },
+      process.env.SECRET_KEY,
+      {
+        expiresIn: "1d",
+      }
+    );
 
     const response = NextResponse.json(
       { message: "User is authenticated.", token },
@@ -41,13 +52,6 @@ export async function POST(request) {
       maxAge: 86400,
       path: "/",
     });
-
-    const loginUser = new LoginUser({
-      email: user.email,
-
-      deviceInfo: deviceInfo,
-    });
-    await loginUser.save();
 
     return response;
   } catch (err) {

@@ -3,19 +3,32 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { useSocketContext } from "../../context/socketcontext";
 
-const MyCard = ({ user }) => {
-  // Function to handle logout
+const MyCard = ({ user, id, isOnline }) => {
+  const { onlineUsers } = useSocketContext();
+  // Function to handle
+  console.log(onlineUsers, "usersonline");
+  // console.log(id);
+  // const isOnline = onlineUsers.includes(id);
+  console.log(isOnline, "online");
   const handleLogout = () => {
     // Add logout functionality here
   };
 
   return (
-    <Card className="max-w-md mx-auto mt-8 p-3 rounded-lg shadow-lg border ">
+    <Card
+      className={`max-w-md mx-auto mt-8 p-3 rounded-lg shadow-lg border ${
+        isOnline ? "bg-green-200" : ""
+      }`}
+    >
       <CardContent className="flex flex-col items-start">
         {/* User Email */}
         <Typography variant="h5" component="div" className="mb-4">
           {user.email}
+        </Typography>
+        <Typography variant="h5" component="div" className="mb-4">
+          {user._id}
         </Typography>
 
         {/* Device Info */}
