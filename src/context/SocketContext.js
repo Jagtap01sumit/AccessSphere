@@ -13,28 +13,23 @@ export const SocketContextProvider = ({ children }) => {
   const { authUser } = useAuthContext();
   const [socket, setSocket] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
-  console.log(authUser, "auto userrr");
 
   useEffect(() => {
-    const decoded = jwtDecode(authUser);
-    const userId = decoded.userId;
-
-    console.log(userId, "userId");
     const socket = io("http://localhost:3000", {
       query: {
-        userId: userId,
+        userId: authUser,
       },
     });
 
     socket.on("getOnlineUsers", (users) => {
       setOnlineUsers(users);
-      //   setOnlineUsers("66461b361f068930ef5c6306");// id of current login user .. get from token
+      //   setOnlineUsers("66461b361f068930ef5c6306");// id of current login user .. get from saved id in localstorage
 
       console.log(users);
     });
 
     return () => socket.close();
-  }, [authUser]); //
+  }, []); //
 
   return (
     <SocketContext.Provider value={{ socket, onlineUsers }}>

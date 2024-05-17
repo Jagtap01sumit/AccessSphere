@@ -46,7 +46,7 @@ export async function POST(request) {
     );
 
     const response = NextResponse.json(
-      { message: "User is authenticated.", token },
+      { message: "User is authenticated.", userId: userId._id },
       { status: 200 }
     );
 

@@ -48,7 +48,7 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <div className="p-4 bg-gray-50">
       {/* <p>USERID: {socket?.id}</p> */}
       <Box className="flex justify-center align-items-center m-5 ">
         <Image
@@ -58,7 +58,7 @@ export default function Home() {
           className="img-fluid d-none d-sm-block"
         />
       </Box>
-      <Typography variant="h1" gutterBottom className="text-center mt-4">
+      <Typography variant="h1" gutterBottom className="text-center !mt-4">
         Manage Access and Devices
       </Typography>
       <Grid
@@ -85,7 +85,7 @@ export default function Home() {
         />
       </Grid>
       <Container>
-        <Grid container spacing={3}>
+        <Grid container spacing={4}>
           {userData
             ?.filter((user) =>
               user.email.toLowerCase().includes(filterEmail.toLowerCase())

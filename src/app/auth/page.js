@@ -10,11 +10,8 @@ export default function Page() {
   const [selectedForm, setselectedForm] = useState("reg");
 
   return (
-    <section className="h-full">
-      <Container
-        maxWidth="xxl"
-        className="h-full flex justify-center items-center"
-      >
+    <section className="h-full flex justify-center items-center my-5">
+      <Container maxWidth="xxl" className=" ">
         <Grid container justifyContent="center">
           <Grid item xs={12} lg={11}>
             <Box py={2}>

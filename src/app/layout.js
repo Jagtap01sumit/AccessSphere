@@ -5,11 +5,7 @@ import { Toaster } from "react-hot-toast";
 
 import { MainContext } from "../context/MainContext";
 import { useState } from "react";
-import {
-  AuthContext,
-  AuthContextProvider,
-  useAuthContext,
-} from "../context/AuthContext";
+import { AuthContextProvider } from "../context/AuthContext";
 import { SocketContextProvider } from "../context/socketcontext";
 
 const inter = Inter({ subsets: ["latin"] });

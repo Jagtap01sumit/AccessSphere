@@ -119,8 +119,9 @@ export default function PassVerify({ setselectedForm, handleLogin }) {
       });
       const responseData = await res.json();
 
-      console.log(responseData);
+      console.log(responseData, "kkkkk");
       if (res.ok) {
+        localStorage.setItem("data", JSON.stringify(responseData.userId));
         window.location.href = "/dashboard";
         reset();
       } else {

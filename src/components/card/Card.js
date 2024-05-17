@@ -18,51 +18,51 @@ const MyCard = ({ user, id, isOnline }) => {
 
   return (
     <Card
-      className={`max-w-md mx-auto mt-8 p-3 rounded-lg shadow-lg border ${
-        isOnline ? "bg-green-200" : ""
+      className={`max-w-md mx-auto mt-8 p-3 rounded-full !shadow-lg !border ${
+        isOnline ? "!bg-green-200" : ""
       }`}
     >
       <CardContent className="flex flex-col items-start">
         {/* User Email */}
-        <Typography variant="h5" component="div" className="mb-4">
+        <Typography variant="h5" component="div" className="!mb-4 line-clamp-3">
           {user.email}
         </Typography>
-        <Typography variant="h5" component="div" className="mb-4">
+        <Typography variant="h5" component="div" className="!mb-4 ">
           {user._id}
         </Typography>
 
         {/* Device Info */}
-        <Typography variant="body2" className="mb-2">
+        <Typography variant="body2" className="!mb-3">
           Device Type: {user.deviceInfo?.deviceType}
         </Typography>
         {user.deviceInfo?.geolocation ? (
           <>
-            <Typography variant="body2" className="mb-2">
+            <Typography variant="body2" className="!mb-2 ">
               Longitude: {user.deviceInfo.geolocation?.longitude}
             </Typography>
-            <Typography variant="body2" className="mb-2">
+            <Typography variant="body2" className="!mb-2">
               Latitude: {user.deviceInfo.geolocation.latitude}
             </Typography>
           </>
         ) : (
           <>
-            <Typography variant="body2" className="mb-2">
+            <Typography variant="body2" className="!mb-2">
               No Access
             </Typography>
-            <Typography variant="body2" className="mb-2">
+            <Typography variant="body2" className="!mb-2">
               No Access
             </Typography>
           </>
         )}
-        <Typography variant="body2" className="mb-2">
+        <Typography variant="body2" className="!mb-2">
           Device Name: {user.deviceInfo?.deviceName}
         </Typography>
-        <Typography variant="body2" className="mb-2">
+        <Typography variant="body2" className="!mb-2">
           IP Address: {user.deviceInfo?.ipAddress}
         </Typography>
 
         {/* Date */}
-        <Typography variant="body2" className="mb-4">
+        <Typography variant="body2" className="!mb-4">
           Date: {new Date(user.createdAt).toLocaleString()}
         </Typography>
 
